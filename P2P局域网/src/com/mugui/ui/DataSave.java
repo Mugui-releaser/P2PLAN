@@ -2,55 +2,32 @@ package com.mugui.ui;
 
 import com.mugui.DataSaveInterface;
 import com.mugui.MAIN;
+import com.mugui.http.SocketUserBean;
 import com.mugui.http.Bean.UserBean;
 import com.mugui.http.pack.Bag;
 import com.mugui.http.pack.UdpBag;
 import com.mugui.http.udp.UDPSocket;
 import com.mugui.http.udp.UdpHandle;
+import com.mugui.model.ModelManagerInterface;
 import com.mugui.tool.DataClassLoader;
 
 public class DataSave implements DataSaveInterface {
 
 	public static final String JARFILEPATH = MAIN.JARFILEPATH;
-	public static DataClassLoader loader;
+	public static DataClassLoader loader = null;
 	public static boolean 兼容 = false;
 	public static boolean 鼠标修正 = false;
 	public static UserBean userBean = null;
 
 	@Override
 	public Object init() {
-		UDPSocket socket = new UDPSocket(8056, new UdpHandle() {
+		if (loader == null)
+			loader = (DataClassLoader) ((SocketUserBean) System.getProperties().get("SocketUserBean")).getClassLoader();
+		if (uimanager == null)
+			uimanager = (UIManagerInterface) loader.loadClassToObject("com.mugui.ui.UIManager");
+		if (modelManager == null)
+			modelManager = (ModelManagerInterface) loader.loadClassToObject("com.mugui.Model.ModelManager");
 
-			@Override
-			public void manage(Bag accpet, UDPSocket udpSocket) {
-				System.out.println("反馈：" + accpet.toString());
-			}
-
-			@Override
-			public Bag getValue(String key) {
-				return null;
-			}
-		});
-		UDPSocket socket2 = new UDPSocket(8057, new UdpHandle() {
-
-			@Override
-			public void manage(Bag accpet, UDPSocket udpSocket) {
-				System.out.println("接收并反馈：" + accpet);
-				udpSocket.Send(accpet);
-				;
-			}
-
-			@Override
-			public Bag getValue(String key) {
-				return null;
-			}
-		});
-		System.out.println("同步");
-		UdpBag bag = new UdpBag();
-		bag.setHost("127.0.0.1");
-		bag.setPort(8057);
-		bag.setBody("holle world");
-		socket.Send(bag);
 		return null;
 	}
 
@@ -62,6 +39,20 @@ public class DataSave implements DataSaveInterface {
 	@Override
 	public Object start() {
 		return null;
+	}
+
+	private UIManagerInterface uimanager = null;
+
+	@Override
+	public UIManagerInterface getUIManager() {
+		return uimanager;
+	}
+
+	private ModelManagerInterface modelManager = null;
+
+	@Override
+	public ModelManagerInterface getModelManager() {
+		return modelManager;
 	}
 
 }

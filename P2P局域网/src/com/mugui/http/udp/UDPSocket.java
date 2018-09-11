@@ -15,7 +15,7 @@ import com.mugui.http.pack.Bag;
 import com.mugui.tool.HttpTool;
 import com.mugui.tool.Other;
 
-public class UDPSocket extends Thread {
+public class UDPSocket {
 	private UDPServer server = null;
 	private UdpHandle tcpHandle = null;
 
@@ -149,7 +149,7 @@ public class UDPSocket extends Thread {
 				byte[] bodylen = new byte[4];
 				ois.readFully(bodylen);
 				int data_len = Other.byteArrayint(bodylen);
-				if (data_len < 5 || data_len > 8192*10) {
+				if (data_len < 5 || data_len > 8192 * 10) {
 					return;
 				}
 				data = new byte[data_len];
@@ -239,7 +239,7 @@ public class UDPSocket extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	} 
+	}
 
 	public void close() {
 		isTrue = false;

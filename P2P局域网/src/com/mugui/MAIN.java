@@ -11,13 +11,14 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
 
+import com.mugui.http.SocketUserBean;
 import com.mugui.model.CmdModel;
 import com.mugui.tool.Other;
-import com.mugui.ui.DataSave;
 
 public class MAIN {
 	protected static final String UI_MANAGER[] = null;
 	public static String JARFILEPATH = null;
+
 	static {
 		JARFILEPATH = MAIN.class.getProtectionDomain().getCodeSource().getLocation().getFile();
 		try {
@@ -28,6 +29,8 @@ public class MAIN {
 	}
 
 	public static void main(String[] args) {
+		DataClassLoaderInterface loader = (DataClassLoaderInterface) new DataClassLoaderInterface().loadClassToObject("com.mugui.tool.DataClassLoader");
+
 		// System.out.println(args.length);
 		File file = new File(JARFILEPATH + "/log");
 		if (!file.isDirectory()) {
@@ -79,11 +82,9 @@ public class MAIN {
 			}
 
 		});
-		 DataSave save = new DataSave();
-		 save.init();
-		 save.start();
-		 System.getProperties().put("DataSave", save);
-
+		
+		SocketUserBean bean = new SocketUserBean(loader);
+		bean.start();
 	}
 
 	public static BufferedImage image = null;
