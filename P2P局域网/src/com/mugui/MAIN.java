@@ -83,7 +83,6 @@ public class MAIN {
 		 save.init();
 		 save.start();
 		 System.getProperties().put("DataSave", save);
-		 System.out.println("!!!!!!!!!!!!!!!"); 
 	}
 
 	public static BufferedImage image = null;

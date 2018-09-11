@@ -195,7 +195,7 @@ public class UDPSocket extends Thread {
 				}
 				bag.setHost(dPacket.getAddress().getHostAddress());
 				bag.setPort(dPacket.getPort());
-				tcpHandle.getClass().newInstance().manage(bag, UDPSocket.this);
+				tcpHandle.manage(bag, UDPSocket.this);
 				return;
 			} catch (Exception e) {
 				e.printStackTrace();
