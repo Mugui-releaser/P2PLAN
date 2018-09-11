@@ -13,6 +13,7 @@ import java.util.Date;
 
 import com.mugui.model.CmdModel;
 import com.mugui.tool.Other;
+import com.mugui.ui.DataSave;
 
 public class MAIN {
 	protected static final String UI_MANAGER[] = null;
@@ -78,10 +79,10 @@ public class MAIN {
 			}
 
 		});
-		// DataSave save = new DataSave();
-		// save.init();
-		// save.start();
-		// System.getProperties().put("DataSave", save);
+		 DataSave save = new DataSave();
+		 save.init();
+		 save.start();
+		 System.getProperties().put("DataSave", save);
 
 	}
 
