@@ -45,6 +45,7 @@ public class DataSave implements DataSaveInterface {
 				return null;
 			}
 		});
+		System.out.println("同步");
 		UdpBag bag = new UdpBag();
 		bag.setHost("127.0.0.1");
 		bag.setPort(8057);
