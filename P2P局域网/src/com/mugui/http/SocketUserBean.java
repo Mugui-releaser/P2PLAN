@@ -18,11 +18,11 @@ public class SocketUserBean {
 		socket = new UDPSocket(-1, new UdpHandle());
 		dataSave = (DataSaveInterface) loader.loadClassToObject("com.mugui.ui.DataSave");
 		dataSave.init();
-
 	}
 
 	public void start() {
 		dataSave.start();
+		
 	}
 
 	public DataClassLoaderInterface getClassLoader() {

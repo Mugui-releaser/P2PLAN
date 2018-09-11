@@ -26,7 +26,7 @@ public class DataSave implements DataSaveInterface {
 		if (uimanager == null)
 			uimanager = (UIManagerInterface) loader.loadClassToObject("com.mugui.ui.UIManager");
 		if (modelManager == null)
-			modelManager = (ModelManagerInterface) loader.loadClassToObject("com.mugui.Model.ModelManager");
+			modelManager = (ModelManagerInterface) loader.loadClassToObject("com.mugui.model.ModelManager");
 
 		return null;
 	}
@@ -36,8 +36,12 @@ public class DataSave implements DataSaveInterface {
 		return null;
 	}
 
+	/**
+	 * 开始
+	 */
 	@Override
 	public Object start() {
+		
 		return null;
 	}
 
