@@ -5,12 +5,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import net.sf.json.JSONObject;
 
+import com.mugui.http.SocketUserBean;
 import com.mugui.http.pack.Bag;
 import com.mugui.tool.HttpTool;
 import com.mugui.tool.Other;
@@ -33,10 +33,6 @@ public class UDPSocket {
 	}
 
 	public UDPSocket(int port, UdpHandle tcpHandle) {
-		this(port, tcpHandle, null);
-	}
-
-	public UDPSocket(int port, UdpHandle tcpHandle, Bag bag) {
 		server = new UDPServer(port);
 		this.tcpHandle = tcpHandle;
 	}
@@ -223,22 +219,9 @@ public class UDPSocket {
 		server.send(dPacket);
 	}
 
-	public void Send(Bag bag) {
+	public void send(Bag bag) {
 		try {
-			byte[] b = bag.toString().getBytes(Charset.forName("UTF-8"));
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			out.write(Other.intToByteArray(b.length));
-			out.write(b);
-			send(out.toByteArray(), bag.getHost(), bag.getPort());
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void SendByteArrays(Bag bag) {
-		try {
-			byte b[] = bag.toByteArrays();
+			byte[] b = bag.toByteArrays();
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			out.write(Other.intToByteArray(b.length));
 			out.write(b);

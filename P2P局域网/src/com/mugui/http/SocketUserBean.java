@@ -1,7 +1,6 @@
 package com.mugui.http;
 
 import com.mugui.DataClassLoaderInterface;
-import com.mugui.http.pack.UdpBag;
 import com.mugui.http.udp.UDPSocket;
 
 /**
@@ -10,7 +9,7 @@ import com.mugui.http.udp.UDPSocket;
  * @author zx844
  *
  */
-public class SocketUserBean {
+public class SocketUserBean extends UDPSocket {
 
 	// 用户的socket类型
 	// udp彻底断绝的，无法使用udp连接外网
@@ -22,8 +21,12 @@ public class SocketUserBean {
 	// ip地址不变,但是端口发生变化的，可通过TYPE_CONSTANT_CONNECT沟通，同种类型可尝试p2p沟通，大部分用户网络都属于此类型
 	public static final int TYPE_POST_VARIETY_CONNECT = 3;
 	private int socket_type = TYPE_UN_CONNECT;
-	private UDPSocket socket = null;
+
 	private DataClassLoaderInterface loader = null;
+
+	public DataClassLoaderInterface getClassLoader() {
+		return loader;
+	}
 
 	/**
 	 * 需要初始化一个sokcet网络流
@@ -32,30 +35,17 @@ public class SocketUserBean {
 	 *            代入一个用于申请新对象的classloader
 	 */
 	public SocketUserBean(DataClassLoaderInterface loader) {
+		// 一个用于接收并对udp包初步处理的handle
+		super(-1, (UdpHandle) loader.loadClassToObject("com.mugui.http.UdpHandle"));
 		this.loader = loader;
-		//一个用于接收并对udp包初步处理的handle
-		com.mugui.http.udp.UdpHandle udpHandle = (com.mugui.http.udp.UdpHandle) loader.loadClassToObject("com.mugui.http.UdpHandle");
-		socket = new UDPSocket(-1, udpHandle);
 	}
 
-	public void start() {
-		socket.receive();
+	public int getSocket_type() {
+		return socket_type;
 	}
 
-	public DataClassLoaderInterface getClassLoader() {
-		return loader;
+	public void setSocket_type(int socket_type) {
+		this.socket_type = socket_type;
 	}
-
-	public boolean isSocketRun() {
-		return socket.isClose();
-	}
-
-	public void quit() {
-		socket.close();
-	}
-
-	public void sendByteArray(UdpBag bag) {
-		socket.Send(bag);
-	}
-
+	
 }

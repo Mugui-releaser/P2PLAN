@@ -31,12 +31,11 @@ public class MAIN {
 
 	public static void main(String[] args) {
 
-		// System.out.println(args.length);
 		openLog(false);
+		// 类加载器
 		DataClassLoaderInterface loader = (DataClassLoaderInterface) new DataClassLoaderInterface().loadClassToObject("com.mugui.tool.DataClassLoader");
 
-		// 用户类
-		User user = new User();
+		User user = (User) loader.loadClassToObject("com.mugui.bean.User");
 		System.getProperties().put("user", user);
 
 		// 申明一个用于保存临时数据的类

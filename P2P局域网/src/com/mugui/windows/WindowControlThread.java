@@ -84,8 +84,8 @@ public class WindowControlThread extends Thread {
 							bean.setFile_seek(seek);
 							seek += len;
 							bag.setBody_description(userbean.toJsonObject());
-							if (map[i].getTcpSocket().isSocketRun()) {
-								map[i].getTcpSocket().sendByteArray(bag);
+							if (!map[i].getTcpSocket().isClose()) {
+								map[i].getTcpSocket().send(bag);
 							} else {
 								map[i].setTrue(false);
 							}

@@ -155,7 +155,6 @@ public class UdpBag implements Bag {
 			setUser_to(jsonObject.getString("user_to"));
 		if (jsonObject.get("bag_code") != null)
 			setBag_code(jsonObject.getString("bag_code"));
-
 		if (jsonObject.get("version") != null)
 			setVersion(jsonObject.getString("version"));
 	}
