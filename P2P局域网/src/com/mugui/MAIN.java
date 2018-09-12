@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
 
+import com.mugui.bean.User;
 import com.mugui.http.SocketUserBean;
 import com.mugui.model.CmdModel;
 import com.mugui.tool.Other;
@@ -29,9 +30,21 @@ public class MAIN {
 	}
 
 	public static void main(String[] args) {
-		DataClassLoaderInterface loader = (DataClassLoaderInterface) new DataClassLoaderInterface().loadClassToObject("com.mugui.tool.DataClassLoader");
 
 		// System.out.println(args.length);
+		openLog(false);
+		DataClassLoaderInterface loader = (DataClassLoaderInterface) new DataClassLoaderInterface().loadClassToObject("com.mugui.tool.DataClassLoader");
+		User user = new User();
+		System.getProperties().put("user", user);
+		DataSaveInterface dataSave = (DataSaveInterface) loader.loadClassToObject("com.mugui.ui.DataSave", loader);
+		SocketUserBean bean = (SocketUserBean) loader.loadClassToObject("com.mugui.ui.DataSave", loader);
+		user.setDataSave(dataSave);
+		user.setSocketUserBean(bean);
+		user.run();
+
+	}
+
+	private static void openLog(boolean b) {
 		File file = new File(JARFILEPATH + "/log");
 		if (!file.isDirectory()) {
 			file.mkdirs();
@@ -52,10 +65,11 @@ public class MAIN {
 				return false;
 			}
 		});
-
-		// init();
-		// System.setOut(new PrintStream(outputStream));
-		// System.setErr(new PrintStream(outputStream));
+		if (b) {
+			init();
+			System.setOut(new PrintStream(outputStream));
+			System.setErr(new PrintStream(outputStream));
+		}
 		System.setOut(new PrintStream(System.out) {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -82,9 +96,6 @@ public class MAIN {
 			}
 
 		});
-		
-		SocketUserBean bean = new SocketUserBean(loader);
-		bean.start();
 	}
 
 	public static BufferedImage image = null;
