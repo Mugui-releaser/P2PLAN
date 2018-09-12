@@ -10,9 +10,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class UdpBag implements Bag {
-	public static final int TYPE_UNKONEW = 0;
-	public static final int TYPE_COMMON = 1;
-	public static final int TYPE_UNCOMMON = 2;
 	public static final String SELECT_APP_ID = "select_app_id";
 	public static final String START_DOWNLOAD_FILE = "start_download_file";
 	public static final String RE_DOWNLOAD_FILE = "re_download_file";
