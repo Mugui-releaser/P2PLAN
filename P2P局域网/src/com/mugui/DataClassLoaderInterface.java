@@ -9,7 +9,8 @@ public class DataClassLoaderInterface extends ClassLoader {
 			Class<?> class1 = loadClass(type);
 			if (class1 == null)
 				return null;
-			if (loader.length == 0) {
+
+			if (loader == null || loader.length == 0) {
 				return class1.newInstance();
 			}
 			Class<?> te[] = new Class<?>[loader.length];

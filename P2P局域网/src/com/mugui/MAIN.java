@@ -34,9 +34,14 @@ public class MAIN {
 		// System.out.println(args.length);
 		openLog(false);
 		DataClassLoaderInterface loader = (DataClassLoaderInterface) new DataClassLoaderInterface().loadClassToObject("com.mugui.tool.DataClassLoader");
+
+		// 用户类
 		User user = new User();
 		System.getProperties().put("user", user);
+
+		// 申明一个用于保存临时数据的类
 		DataSaveInterface dataSave = (DataSaveInterface) loader.loadClassToObject("com.mugui.ui.DataSave", loader);
+		// 申明一个socket管理的类
 		SocketUserBean bean = (SocketUserBean) loader.loadClassToObject("com.mugui.ui.DataSave", loader);
 		user.setDataSave(dataSave);
 		user.setSocketUserBean(bean);

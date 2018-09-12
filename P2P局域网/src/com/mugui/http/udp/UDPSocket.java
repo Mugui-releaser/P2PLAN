@@ -38,46 +38,54 @@ public class UDPSocket {
 
 	public UDPSocket(int port, UdpHandle tcpHandle, Bag bag) {
 		server = new UDPServer(port);
-		receive();
 		this.tcpHandle = tcpHandle;
 	}
 
-	private void receive() {
-		new Thread(new Runnable() {
-			// 创建一个用于接收的
-			public void run() {
-				isTrue = true;
-				udpAccpetThreadsSIze = 0;
-				while (server.isClose() && isTrue) {
-					try {
-						DatagramPacket dPacket = new DatagramPacket(new byte[1024], 1024);
-						dPacket = server.receive(dPacket);
-						if (dPacket == null)
-							continue;
-						UDPAccpetThread thread = null;
-						while ((thread = udpAccpetThreads.pollFirst()) == null) {
-							if (udpAccpetThreadsSIze < 50) {
-								thread = new UDPAccpetThread();
-								thread.start();
-								break;
-							} else {
-								Other.sleep(50);
-							}
-						}
-						udpAccpetThreadsSIze++;
-						thread.setDPacket(dPacket);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+	private boolean isTrue = false;
 
+	private Thread listenerthread = null;
+
+	/**
+	 * 开始监听
+	 */
+	public void receive() {
+		if (listenerthread == null || !listenerthread.isAlive()) {
+			listenerthread = new Thread(new Runnable() {
+				// 创建一个用于接收的
+				public void run() {
+					isTrue = true;
+					udpAccpetThreadsSIze = 0;
+					while (server.isClose() && isTrue) {
+						try {
+							DatagramPacket dPacket = new DatagramPacket(new byte[1024], 1024);
+							dPacket = server.receive(dPacket);
+							if (dPacket == null)
+								continue;
+							UDPAccpetThread thread = null;
+							while ((thread = udpAccpetThreads.pollFirst()) == null) {
+								if (udpAccpetThreadsSIze < 50) {
+									thread = new UDPAccpetThread();
+									thread.start();
+									break;
+								} else {
+									Other.sleep(50);
+								}
+							}
+							udpAccpetThreadsSIze++;
+							thread.setDPacket(dPacket);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+					}
 				}
-			}
-		}).start();
+			});
+			listenerthread.start();
+		}
 	}
 
-	LinkedBlockingDeque<UDPAccpetThread> udpAccpetThreads = new LinkedBlockingDeque<UDPAccpetThread>();
-	int udpAccpetThreadsSIze = 0;
-	private boolean isTrue = false;
+	private LinkedBlockingDeque<UDPAccpetThread> udpAccpetThreads = new LinkedBlockingDeque<UDPAccpetThread>();
+	private int udpAccpetThreadsSIze = 0;
 
 	class UDPAccpetThread extends Thread {
 		private DatagramPacket dPacket = null;
@@ -248,6 +256,6 @@ public class UDPSocket {
 	}
 
 	public boolean isClose() {
-		return server.isClose();
+		return isTrue && server.isClose();
 	}
 }
