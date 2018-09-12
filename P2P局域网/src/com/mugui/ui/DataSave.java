@@ -58,14 +58,12 @@ public class DataSave implements DataSaveInterface {
 
 	private UIManagerInterface uimanager = null;
 
-	@Override
 	public UIManagerInterface getUIManager() {
 		return uimanager;
 	}
 
 	private ModelManagerInterface modelManager = null;
 
-	@Override
 	public ModelManagerInterface getModelManager() {
 		return modelManager;
 	}
