@@ -33,6 +33,7 @@ public class SocketUserBean {
 	 */
 	public SocketUserBean(DataClassLoaderInterface loader) {
 		this.loader = loader;
+		//一个用于接收并对udp包初步处理的handle
 		com.mugui.http.udp.UdpHandle udpHandle = (com.mugui.http.udp.UdpHandle) loader.loadClassToObject("com.mugui.http.UdpHandle");
 		socket = new UDPSocket(-1, udpHandle);
 	}
