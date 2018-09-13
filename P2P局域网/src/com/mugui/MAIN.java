@@ -13,7 +13,13 @@ import java.util.Date;
 
 import com.mugui.bean.User;
 import com.mugui.http.SocketUserBean;
+import com.mugui.http.TcpHandle;
+import com.mugui.http.pack.TcpBag;
+import com.mugui.http.tcp.TcpSocketClient;
+import com.mugui.http.tcp.TcpSocketServer;
+import com.mugui.http.tcp.TcpSocketUserBean;
 import com.mugui.model.CmdModel;
+import com.mugui.tool.DataClassLoader;
 import com.mugui.tool.Other;
 
 public class MAIN {
@@ -46,6 +52,18 @@ public class MAIN {
 		user.setSocketUserBean(bean);
 		user.run();
 
+		// tcp测试
+		// TcpSocketServer server = new TcpSocketServer(5100);
+		// server.start();
+
+		// TcpSocketUserBean userBean = new TcpSocketUserBean(new TcpHandle(),
+		// (DataClassLoader) loader);
+		// userBean.setSocketChannel(new TcpSocketClient("127.0.0.1", 5100));
+		//
+		// TcpBag bag = new TcpBag();
+		// bag.setBody("holle world");
+		// userBean.send(bag);
+		// userBean.send(bag);
 	}
 
 	private static void openLog(boolean b) {
