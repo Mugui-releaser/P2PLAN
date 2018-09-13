@@ -36,7 +36,7 @@ public class SocketUserBean extends UDPSocket {
 	 */
 	public SocketUserBean(DataClassLoaderInterface loader) {
 		// 一个用于接收并对udp包初步处理的handle
-		super(-1, (UdpHandle) loader.loadClassToObject("com.mugui.http.UdpHandle"));
+		super(5100, (UdpHandle) loader.loadClassToObject("com.mugui.http.UdpHandle"));
 		this.loader = loader;
 	}
 

@@ -25,6 +25,10 @@ public class UDPServer {
 			else
 				dSocket = new DatagramSocket(port);
 		} catch (SocketException e) {
+			try {
+				dSocket = new DatagramSocket();
+			} catch (SocketException e1) {
+			}
 			e.printStackTrace();
 		}
 	}
@@ -43,7 +47,7 @@ public class UDPServer {
 			byte[] now = new byte[now_len];
 			System.arraycopy(b, 8, now, 0, now_len);
 			byte[] yuan = new byte[yuan_len];
-			yuan=Other.ZIPDecompressor(now, yuan_len);
+			yuan = Other.ZIPDecompressor(now, yuan_len);
 			yuan = Other.ArrayBytesDecrypt(yuan);
 			dPacket.setData(yuan);
 			return dPacket;

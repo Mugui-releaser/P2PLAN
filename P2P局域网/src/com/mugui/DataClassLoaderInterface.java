@@ -17,14 +17,35 @@ public class DataClassLoaderInterface extends ClassLoader {
 			for (int i = 0; i < te.length; i++) {
 				te[i] = loader[i].getClass();
 			}
-			Constructor constructor = class1.getConstructor(te);
-			if (constructor == null)
-				return null;
-			return constructor.newInstance(loader);
+			Constructor<?>[] constructors = class1.getConstructors();
+			for (Constructor<?> constructor : constructors) {
+				if (arrayContentsEq(te, constructor.getParameterTypes())) {
+					return constructor.newInstance(loader);
+				}
+			}
+			throw new NoSuchMethodException(class1.getName() + ".<init> is Error");
+
 		} catch (InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException
 				| InvocationTargetException e) {
 			return null;
 		}
+	}
+
+	private boolean arrayContentsEq(Class<?>[] loader, Class<?>[] parameterTypes) {
+		if (loader == null && parameterTypes == null)
+			return false;
+		if (loader.length != parameterTypes.length)
+			return false;
+		Class<?> temp = null;
+		for (int i = 0; i < loader.length; i++) {
+			temp = loader[i];
+			while (temp != parameterTypes[i]) {
+				if (temp == Object.class)
+					return false;
+				temp = temp.getSuperclass();
+			}
+		}
+		return true;
 	}
 
 	@Override

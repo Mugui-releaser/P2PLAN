@@ -33,12 +33,12 @@ public class User {
 	public void run() {
 		dataSave.init();
 		socketUserBean.receive();
-//		UdpBag bag = new UdpBag();
-//		bag.setBody("holle world");
-//		bag.setPort(5100);
-//		bag.setHost("mugui.wicp.net");
-//		socketUserBean.send(bag);
-
+		UdpBag bag = new UdpBag();
+		bag.setBody("holle world");
+		bag.setPort(5100);
+		bag.setHost("127.0.0.1");
+		socketUserBean.send(bag);
+		System.out.println("发送->"+bag);
 	}
 
 }
