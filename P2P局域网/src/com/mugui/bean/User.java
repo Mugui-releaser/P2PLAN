@@ -2,6 +2,7 @@ package com.mugui.bean;
 
 import com.mugui.DataSaveInterface;
 import com.mugui.http.SocketUserBean;
+import com.mugui.http.pack.UdpBag;
 
 /**
  * 一个用户的统一管理类
@@ -32,10 +33,12 @@ public class User {
 	public void run() {
 		dataSave.init();
 		socketUserBean.receive();
-		
-		
-		
-		
+//		UdpBag bag = new UdpBag();
+//		bag.setBody("holle world");
+//		bag.setPort(5100);
+//		bag.setHost("mugui.wicp.net");
+//		socketUserBean.send(bag);
+
 	}
 
 }

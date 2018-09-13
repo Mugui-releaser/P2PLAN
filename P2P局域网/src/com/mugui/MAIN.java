@@ -41,7 +41,7 @@ public class MAIN {
 		// 申明一个用于保存临时数据的类
 		DataSaveInterface dataSave = (DataSaveInterface) loader.loadClassToObject("com.mugui.ui.DataSave", loader);
 		// 申明一个socket管理的类
-		SocketUserBean bean = (SocketUserBean) loader.loadClassToObject("com.mugui.ui.DataSave", loader);
+		SocketUserBean bean = (SocketUserBean) loader.loadClassToObject("com.mugui.http.SocketUserBean", loader);
 		user.setDataSave(dataSave);
 		user.setSocketUserBean(bean);
 		user.run();
