@@ -31,6 +31,8 @@ public class DataSave implements DataSaveInterface {
 		if (modelManager == null)
 			modelManager = (ModelManagerInterface) loader.loadClassToObject("com.mugui.model.ModelManager");
 
+		uimanager.init();
+		modelManager.init();
 		return null;
 	}
 
@@ -53,8 +55,7 @@ public class DataSave implements DataSaveInterface {
 	public Object start() {
 		if (uimanager != null || modelManager != null)
 			throw new NullPointerException("请先调用Init进行初始化");
-		uimanager.init();
-		modelManager.init();
+
 		return null;
 	}
 

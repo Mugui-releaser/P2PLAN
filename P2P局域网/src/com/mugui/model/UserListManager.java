@@ -114,6 +114,7 @@ public class UserListManager implements ModelInterface {
 	}
 
 	public void Default(UdpBag bag) {
+		System.out.println(bag.getHost() + ":" + bag.getPort() + "->" + bag);
 		ManagerBean managerBean = hashmap.get(bag.getUser_id());
 		if (managerBean != null) {
 			UdpBag temp = managerBean.bag;
