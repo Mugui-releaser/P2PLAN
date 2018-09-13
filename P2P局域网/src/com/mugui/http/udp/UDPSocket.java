@@ -10,7 +10,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import net.sf.json.JSONObject;
 
-import com.mugui.http.SocketUserBean;
 import com.mugui.http.pack.Bag;
 import com.mugui.tool.HttpTool;
 import com.mugui.tool.Other;

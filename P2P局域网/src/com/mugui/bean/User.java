@@ -32,6 +32,10 @@ public class User {
 	public void run() {
 		dataSave.init();
 		socketUserBean.receive();
+		
+		
+		
+		
 	}
 
 }
