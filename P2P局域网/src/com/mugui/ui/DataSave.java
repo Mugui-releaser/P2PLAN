@@ -2,6 +2,7 @@ package com.mugui.ui;
 
 import com.mugui.DataSaveInterface;
 import com.mugui.MAIN;
+import com.mugui.ModelInterface;
 import com.mugui.http.Bean.UserBean;
 import com.mugui.model.ModelManagerInterface;
 import com.mugui.tool.DataClassLoader;
@@ -29,6 +30,7 @@ public class DataSave implements DataSaveInterface {
 			uimanager = (UIManagerInterface) loader.loadClassToObject("com.mugui.ui.UIManager");
 		if (modelManager == null)
 			modelManager = (ModelManagerInterface) loader.loadClassToObject("com.mugui.model.ModelManager");
+
 		return null;
 	}
 
@@ -49,7 +51,7 @@ public class DataSave implements DataSaveInterface {
 	 */
 	@Override
 	public Object start() {
-		if (uimanager != null || modelManager == null)
+		if (uimanager != null || modelManager != null)
 			throw new NullPointerException("请先调用Init进行初始化");
 		uimanager.init();
 		modelManager.init();

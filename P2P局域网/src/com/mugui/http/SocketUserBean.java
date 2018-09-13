@@ -1,7 +1,10 @@
 package com.mugui.http;
 
 import com.mugui.DataClassLoaderInterface;
+import com.mugui.bean.User;
 import com.mugui.http.udp.UDPSocket;
+import com.mugui.model.UserListManager;
+import com.mugui.ui.DataSave;
 
 /**
  * 用户的socket管理的类，socket 发包，收包，处理包都统一使用此类
@@ -19,7 +22,7 @@ public class SocketUserBean extends UDPSocket {
 	// post和host都不发生改变的，可直接作为服务器使用udpsocket;
 	public static final int TYPE_CONSTANT_CONNECT = 2;
 	// ip地址不变,但是端口发生变化的，可通过TYPE_CONSTANT_CONNECT沟通，同种类型可尝试p2p沟通，大部分用户网络都属于此类型
-	public static final int TYPE_POST_VARIETY_CONNECT = 3;
+	public static final int TYPE_PORT_VARIETY_CONNECT = 3;
 	private int socket_type = TYPE_UN_CONNECT;
 
 	private DataClassLoaderInterface loader = null;
@@ -36,8 +39,22 @@ public class SocketUserBean extends UDPSocket {
 	 */
 	public SocketUserBean(DataClassLoaderInterface loader) {
 		// 一个用于接收并对udp包初步处理的handle
-		super(5100, (UdpHandle) loader.loadClassToObject("com.mugui.http.UdpHandle"));
+		this(5100, loader);
+	}
+
+	private DataSave dataSave = null;
+	private User user = null;
+	private UserListManager usermanager = null;
+
+	public UserListManager getUsermanager() {
+		return usermanager;
+	}
+
+	public SocketUserBean(int port, DataClassLoaderInterface loader) {
+		// 一个用于接收并对udp包初步处理的handle
+		super(port, (UdpHandle) loader.loadClassToObject("com.mugui.http.UdpHandle"));
 		this.loader = loader;
+
 	}
 
 	public int getSocket_type() {
@@ -47,5 +64,17 @@ public class SocketUserBean extends UDPSocket {
 	public void setSocket_type(int socket_type) {
 		this.socket_type = socket_type;
 	}
-	
+
+	@Override
+	public void receive() {
+		super.receive();
+		if (user == null) {
+			user = (User) System.getProperties().get("user");
+			dataSave = (DataSave) user.getDataSave();
+			usermanager = (UserListManager) dataSave.getModelManager().get("UserListManager");
+			usermanager.init();
+			usermanager.start();
+		}
+	}
+
 }

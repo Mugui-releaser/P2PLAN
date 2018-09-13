@@ -1,5 +1,7 @@
 package com.mugui.http;
 
+import java.util.HashMap;
+
 import com.mugui.http.pack.Bag;
 import com.mugui.http.pack.UdpBag;
 import com.mugui.http.udp.UDPSocket;
@@ -23,7 +25,17 @@ public class UdpHandle implements com.mugui.http.udp.UdpHandle {
 	@Override
 	public void manage(Bag accpet, UDPSocket udpSocket) {
 		UdpBag bag = (UdpBag) accpet;
-		System.out.println(bag.getBody());
+		SocketUserBean socketUserBean = (SocketUserBean) udpSocket;
+
+		switch (Integer.parseInt(bag.getBag_id())) {
+		case DEFAULT:
+			socketUserBean.getUsermanager().Default(bag);
+			break;
+		default:
+		
+			break;
+		}
+
 	}
 
 }
